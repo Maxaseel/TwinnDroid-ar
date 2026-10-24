@@ -16,12 +16,12 @@ android {
         applicationId = "com.twinndroid"
         minSdk = 26
         targetSdk = 36
-        versionCode = 6
-        versionName = "1.1.4"
+        versionCode = 7
+        versionName = "1.1.5"
     }
 
     // Release key: keystore.properties next to the project, in ~/.twinndroid-signing/, or TWINN_KEYSTORE_* env vars.
-    // Never committed. Without it, release builds fall back to the debug key.
+    // Never committed. Without it, release builds remain unsigned.
     val keyProps = Properties().apply {
         listOf(rootProject.file("keystore.properties"), File(System.getProperty("user.home"), ".twinndroid-signing/keystore.properties"))
             .firstOrNull { it.exists() }?.inputStream()?.use { load(it) }
@@ -48,7 +48,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.findByName("release") ?: signingConfigs.getByName("debug")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
 

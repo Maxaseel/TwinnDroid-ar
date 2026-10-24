@@ -1,0 +1,36 @@
+name: Android Release APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-apk:
+    name: Build unsigned release APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Set up Gradle cache
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build release APK
+        run: bash ./gradlew --no-daemon assembleRelease
+      - name: Verify unsigned APK output
+        run: test -s app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Upload unsigned APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: twinndroid-v1.1.5-unsigned-apk
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          if-no-files-found: error
+          retention-days: 14

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TwinnDroid</string>
     <string name="appearancescreen_a">A</string>
@@ -14,7 +14,7 @@
     <string name="appearancescreen_your_own_image">Your own image</string>
     <string name="appearancesubscreens_preview_background">Preview background</string>
     <string name="appearancesubscreens_reset_header">Reset header</string>
-    <string name="appearancesubscreens_the_animation_that_plays_behind_twin">The animation that plays behind TwinnDroid\\'s screens. It pauses whenever TwinnDroid isn\\'t on screen. </string>
+    <string name="appearancesubscreens_the_animation_that_plays_behind_twin">The animation that plays behind TwinnDroid screens. It pauses whenever TwinnDroid is not visible.</string>
     <string name="apppages_apk_apks_xapk_or_apkm">.apk, .apks, .xapk or .apkm</string>
     <string name="apppages_extract_apk">Extract APK</string>
     <string name="apppages_from_an_apk_file">From an APK file</string>
@@ -57,7 +57,7 @@
     <string name="editor_icon">Icon</string>
     <string name="editor_icon_default_desc">Name, badge, colour, tint</string>
     <string name="editor_identity">Identity</string>
-    <string name="editor_likely_wont_run">Likely won\'t run as a clone</string>
+    <string name="editor_likely_wont_run">Likely to fail when cloned</string>
     <string name="editor_new_clone">New clone</string>
     <string name="editor_original_badge_custom">Name, badge, colour, tint</string>
     <string name="editor_original_icon">Original icon</string>
@@ -65,12 +65,12 @@
     <string name="editor_permissions">Permissions</string>
     <string name="editor_permissions_kept">%1$d of %2$d kept</string>
     <string name="editor_save_rebuild_install">Save, rebuild &amp; install</string>
-    <string name="editor_signature_warning">Clones are re-signed with TwinnDroid\'s key. Apps that check their own signature or use Play Integrity (most banking apps, some games, Google Sign-In tied to the original) may refuse to log in.</string>
+    <string name="editor_signature_warning">Clones are re-signed with the TwinnDroid key. Apps that verify their own signature or use Play Integrity (most banking apps, some games, and Google Sign-In tied to the original) may refuse to log in.</string>
     <string name="editor_signin_may_fail">Sign-in may not work</string>
     <string name="editor_unique_package">Each clone needs a unique package. This is what keeps its login separate.</string>
     <string name="editor_unnamed">Unnamed</string>
     <string name="editorscreen_app_name">App name</string>
-    <string name="editorscreen_clones_are_re_signed_with_twinndroid">Clones are re-signed with TwinnDroid\\'s key. Apps that check their own signature or use Play Integrity </string>
+    <string name="editorscreen_clones_are_re_signed_with_twinndroid">Clones are re-signed with the TwinnDroid key. Apps that verify their own signature or use Play Integrity may refuse to log in.</string>
     <string name="editorscreen_debuggable">Debuggable</string>
     <string name="editorscreen_lets_you_inspect_the_clone_with_adb">Lets you inspect the clone with adb / Android Studio.</string>
     <string name="editorscreen_package_name">Package name</string>
@@ -125,12 +125,12 @@
     <string name="settings_backup_saved">Backup saved.</string>
     <string name="settings_export_failed">Export failed: %1$s</string>
     <string name="settings_invalid_key">Not a valid TwinnDroid key: %1$s</string>
-    <string name="settings_rebuild_same_key">Rebuilding keeps the clone\'s data and login because it\'s signed with the same key.</string>
+    <string name="settings_rebuild_same_key">Rebuilding preserves clone data and login because the same key signs it.</string>
     <string name="settings_restore_failed">Restore failed: %1$s</string>
-    <string name="settings_shizuku_fallback">Falls back to Android\'s installer when unavailable.</string>
+    <string name="settings_shizuku_fallback">Uses the Android installer when Shizuku is unavailable.</string>
     <string name="settings_shizuku_not_running">Not running. Install Shizuku and start it with Wireless debugging (no root needed) for prompt-free installs and background auto-updates.</string>
     <string name="settings_shizuku_ready">✓ Ready — clones install without a confirmation dialog.</string>
-    <string name="settings_shizuku_running">Shizuku is running but TwinnDroid isn\'t authorized yet.</string>
+    <string name="settings_shizuku_running">Shizuku is running, but TwinnDroid has not been authorized yet.</string>
     <string name="settings_shizuku_title">Shizuku (optional)</string>
     <string name="settings_signing_key_title">Signing key</string>
     <string name="settings_updates_title">Updates</string>

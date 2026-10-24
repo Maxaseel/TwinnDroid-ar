@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -107,10 +110,10 @@ fun ColorPickerDialog(title: String, initial: Long, onDismiss: () -> Unit, onApp
                             hue = hsv[0]; sat = hsv[1]; value = hsv[2]
                         }
                     },
-                    label = { Text("Hex code") },
-                    prefix = { Text("#") },
+                    label = { Text( stringResource(R.string.colorpicker_hex_code)) },
+                    prefix = { Text( stringResource(R.string.colorpicker_text)) },
                     isError = hexError,
-                    supportingText = { if (hexError) Text("Use 6 hex digits, e.g. 7C4DFF") },
+                    supportingText = { if (hexError) Text( stringResource(R.string.colorpicker_use_6_hex_digits_e_g_7c4dff)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -127,7 +130,7 @@ fun ColorPickerDialog(title: String, initial: Long, onDismiss: () -> Unit, onApp
                     Brush.horizontalGradient(listOf(Color.Black, Color.hsv(hue, sat, 1f))),
                 ) { value = it; syncHex() }
                 Spacer(Modifier.height(8.dp))
-                Text("Quick picks", style = MaterialTheme.typography.labelLarge)
+                Text( stringResource(R.string.colorpicker_quick_picks), style = MaterialTheme.typography.labelLarge)
                 Spacer(Modifier.height(8.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     QUICK_SWATCHES.forEach { c ->
@@ -140,8 +143,8 @@ fun ColorPickerDialog(title: String, initial: Long, onDismiss: () -> Unit, onApp
                 }
             }
         },
-        confirmButton = { TextButton(onClick = { onApply(argb) }, enabled = !hexError) { Text("Apply") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        confirmButton = { TextButton(onClick = { onApply(argb) }, enabled = !hexError) { Text( stringResource(R.string.colorpicker_apply)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text( stringResource(R.string.colorpicker_cancel)) } },
     )
 }
 

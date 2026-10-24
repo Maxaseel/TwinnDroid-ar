@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings as AndroidSettings
@@ -136,8 +139,8 @@ fun ClonesPage(vm: MainViewModel, onNewClone: () -> Unit) {
                     else "This removes the clone settings from TwinnDroid.",
                 )
             },
-            confirmButton = { TextButton(onClick = { vm.delete(item.config); confirmDelete = null }) { Text("Remove") } },
-            dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text("Cancel") } },
+            confirmButton = { TextButton(onClick = { vm.delete(item.config); confirmDelete = null }) { Text( stringResource(R.string.homescreen_remove)) } },
+            dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text( stringResource(R.string.homescreen_cancel)) } },
         )
     }
 }
@@ -152,15 +155,15 @@ private fun EmptyState(onNewClone: () -> Unit) {
             Image(painterResource(R.drawable.ic_launcher_foreground), null, Modifier.size(120.dp))
         }
         Spacer(Modifier.height(20.dp))
-        Text("No clones yet", style = MaterialTheme.typography.titleLarge)
+        Text( stringResource(R.string.homescreen_no_clones_yet), style = MaterialTheme.typography.titleLarge)
         Spacer(Modifier.height(6.dp))
         Text(
-            "Make a second copy of an app with its own login, name and icon.",
+             stringResource(R.string.homescreen_make_a_second_copy_of_an_app_with_it),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(Modifier.height(16.dp))
-        FilledTonalButton(onClick = onNewClone) { Text("Make your first clone") }
+        FilledTonalButton(onClick = onNewClone) { Text( stringResource(R.string.homescreen_make_your_first_clone)) }
     }
 }
 
@@ -228,15 +231,15 @@ private fun CloneCard(
                 Box {
                     IconButton(onClick = { menu = true }) { Icon(Icons.Rounded.MoreVert, "More") }
                     DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                        DropdownMenuItem(text = { Text("Edit") }, leadingIcon = { Icon(Icons.Rounded.Edit, null) }, onClick = { menu = false; onEdit() })
-                        DropdownMenuItem(text = { Text("Rebuild & reinstall") }, leadingIcon = { Icon(Icons.Rounded.Build, null) }, onClick = { menu = false; onBuild() })
+                        DropdownMenuItem(text = { Text( stringResource(R.string.homescreen_edit)) }, leadingIcon = { Icon(Icons.Rounded.Edit, null) }, onClick = { menu = false; onEdit() })
+                        DropdownMenuItem(text = { Text( stringResource(R.string.homescreen_rebuild_reinstall)) }, leadingIcon = { Icon(Icons.Rounded.Build, null) }, onClick = { menu = false; onBuild() })
                         if (item.installedVersion != null) {
-                            DropdownMenuItem(text = { Text("Uninstall clone") }, leadingIcon = { Icon(Icons.Rounded.Delete, null) }, onClick = { menu = false; onUninstall() })
+                            DropdownMenuItem(text = { Text( stringResource(R.string.homescreen_uninstall_clone)) }, leadingIcon = { Icon(Icons.Rounded.Delete, null) }, onClick = { menu = false; onUninstall() })
                         }
                         if (item.access.isNotEmpty()) {
-                            DropdownMenuItem(text = { Text("Special access") }, leadingIcon = { Icon(Icons.Rounded.AdminPanelSettings, null) }, onClick = { menu = false; onAccess() })
+                            DropdownMenuItem(text = { Text( stringResource(R.string.homescreen_special_access)) }, leadingIcon = { Icon(Icons.Rounded.AdminPanelSettings, null) }, onClick = { menu = false; onAccess() })
                         }
-                        DropdownMenuItem(text = { Text("Remove from list") }, onClick = { menu = false; onDelete() })
+                        DropdownMenuItem(text = { Text( stringResource(R.string.homescreen_remove_from_list)) }, onClick = { menu = false; onDelete() })
                     }
                 }
             }
@@ -244,18 +247,18 @@ private fun CloneCard(
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 when {
                     item.updateAvailable -> FilledTonalButton(onClick = onBuild) {
-                        Icon(Icons.Rounded.SystemUpdate, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Update")
+                        Icon(Icons.Rounded.SystemUpdate, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text( stringResource(R.string.homescreen_update))
                     }
                     item.installedVersion == null -> FilledTonalButton(onClick = onBuild) {
-                        Icon(Icons.Rounded.Build, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Build & install")
+                        Icon(Icons.Rounded.Build, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text( stringResource(R.string.homescreen_build_install))
                     }
                 }
                 if (item.installedVersion != null) {
                     OutlinedButton(onClick = onOpen) {
-                        Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Open")
+                        Icon(Icons.AutoMirrored.Rounded.OpenInNew, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text( stringResource(R.string.homescreen_open))
                     }
                 }
-                OutlinedButton(onClick = onEdit) { Text("Customize") }
+                OutlinedButton(onClick = onEdit) { Text( stringResource(R.string.homescreen_customize)) }
             }
         }
     }

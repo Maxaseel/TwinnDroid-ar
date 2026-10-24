@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import android.net.Uri
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -122,7 +125,7 @@ fun AppearanceScreen(vm: MainViewModel) {
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent, scrolledContainerColor = Color.Transparent),
-                title = { Text("Appearance") },
+                title = { Text( stringResource(R.string.appearancescreen_appearance)) },
                 navigationIcon = { IconButton(onClick = { vm.screen = Screen.Home }) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
             )
         },
@@ -148,14 +151,14 @@ fun AppearanceScreen(vm: MainViewModel) {
                 if (Build.VERSION.SDK_INT >= 31) {
                     Row(Modifier.fillMaxWidth().padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text("Material You")
+                            Text( stringResource(R.string.appearancescreen_material_you))
                             Hint("Use colours from your wallpaper")
                         }
                         Switch(checked = cfg.dynamicColor, onCheckedChange = { v -> repo.update { it.copy(dynamicColor = v) } })
                     }
                 }
                 Spacer(Modifier.height(12.dp))
-                Text("Presets", style = MaterialTheme.typography.labelLarge)
+                Text( stringResource(R.string.appearancescreen_presets), style = MaterialTheme.typography.labelLarge)
                 Spacer(Modifier.height(8.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     ThemePresets.all.forEach { preset ->
@@ -239,20 +242,20 @@ fun AppearanceScreen(vm: MainViewModel) {
                     }
                 }
                 if (cfg.custom != null) {
-                    TextButton(onClick = { repo.update { it.copy(custom = null) } }) { Text("Reset to preset") }
+                    TextButton(onClick = { repo.update { it.copy(custom = null) } }) { Text( stringResource(R.string.appearancescreen_reset_to_preset)) }
                 }
             }
 
             Panel("Text size") {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("A", style = MaterialTheme.typography.bodySmall)
+                    Text( stringResource(R.string.appearancescreen_a), style = MaterialTheme.typography.bodySmall)
                     Slider(
                         value = cfg.fontScale,
                         onValueChange = { v -> repo.update { it.copy(fontScale = (v * 20).toInt() / 20f) } },
                         valueRange = 0.85f..1.4f,
                         modifier = Modifier.weight(1f).padding(horizontal = 12.dp),
                     )
-                    Text("A", style = MaterialTheme.typography.titleLarge)
+                    Text( stringResource(R.string.appearancescreen_a), style = MaterialTheme.typography.titleLarge)
                 }
                 Hint("${(cfg.fontScale * 100).toInt()}% of your system text size")
             }
@@ -292,7 +295,7 @@ fun AppearanceScreen(vm: MainViewModel) {
                 }
 
                 Spacer(Modifier.height(20.dp))
-                Text("Your own image", style = MaterialTheme.typography.labelLarge)
+                Text( stringResource(R.string.appearancescreen_your_own_image), style = MaterialTheme.typography.labelLarge)
                 Hint(
                     "Android doesn't let apps swap their real icon for any picture, so TwinnDroid adds a home-screen " +
                         "shortcut with your image and name instead.",
@@ -312,7 +315,7 @@ fun AppearanceScreen(vm: MainViewModel) {
                     OutlinedTextField(
                         value = shortcutLabel,
                         onValueChange = { shortcutLabel = it.take(24) },
-                        label = { Text("Name") },
+                        label = { Text( stringResource(R.string.appearancescreen_name)) },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                     )
@@ -328,7 +331,7 @@ fun AppearanceScreen(vm: MainViewModel) {
                             val ok = runCatching { AppIcons.pinCustomShortcut(context, customUri!!, shortcutLabel) }.getOrDefault(false)
                             if (!ok) vm.message = "Your launcher doesn't support adding shortcuts."
                         },
-                    ) { Text("Add to home screen") }
+                    ) { Text( stringResource(R.string.appearancescreen_add_to_home_screen)) }
                 }
             }
             Spacer(Modifier.height(8.dp))
@@ -353,7 +356,7 @@ fun AppearanceScreen(vm: MainViewModel) {
             title = { Text("Switch to ${icon.name} icon?") },
             text = {
                 Text(
-                    "The new icon is applied when you leave TwinnDroid. A TwinnDroid shortcut on your home screen may " +
+                     stringResource(R.string.appearancescreen_the_new_icon_is_applied_when_you_lea) +
                         "disappear; add it again from the app drawer.",
                 )
             },
@@ -362,9 +365,9 @@ fun AppearanceScreen(vm: MainViewModel) {
                     AppIcons.choose(context, icon)
                     currentIcon = icon
                     pendingIcon = null
-                }) { Text("Switch") }
+                }) { Text( stringResource(R.string.appearancescreen_switch)) }
             },
-            dismissButton = { TextButton(onClick = { pendingIcon = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pendingIcon = null }) { Text( stringResource(R.string.appearancescreen_cancel)) } },
         )
     }
 }

@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -76,7 +79,7 @@ fun TwinnRoot(vm: MainViewModel) {
     vm.message?.let { msg ->
         AlertDialog(
             onDismissRequest = { vm.message = null },
-            confirmButton = { TextButton(onClick = { vm.message = null }) { Text("OK") } },
+            confirmButton = { TextButton(onClick = { vm.message = null }) { Text( stringResource(R.string.twinnroot_ok)) } },
             text = { Text(msg, style = androidx.compose.material3.MaterialTheme.typography.bodyLarge) },
         )
     }
@@ -121,7 +124,7 @@ private fun RootContent(vm: MainViewModel, backdrop: Backdrop) {
                 contentAlignment = Alignment.BottomCenter,
             ) {
                 Text(
-                    "Tap anywhere to return",
+                     stringResource(R.string.twinnroot_tap_anywhere_to_return),
                     modifier = Modifier.navigationBarsPadding().padding(32.dp),
                     color = androidx.compose.material3.MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                 )

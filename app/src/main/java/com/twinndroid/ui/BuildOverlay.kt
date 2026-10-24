@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
@@ -177,7 +180,7 @@ fun BuildOverlay(vm: MainViewModel, state: BuildState) {
                     OutlinedButton(onClick = vm::dismissBuild) { Text(if (success) "Done" else "Close") }
                     val launch = if (success) vm.launchIntent(state.clonePackage) else null
                     if (launch != null) {
-                        Button(onClick = { vm.dismissBuild(); context.startActivity(launch) }) { Text("Open clone") }
+                        Button(onClick = { vm.dismissBuild(); context.startActivity(launch) }) { Text( stringResource(R.string.buildoverlay_open_clone)) }
                     }
                 }
             }

@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -180,7 +183,7 @@ fun EditorScreen(vm: MainViewModel) {
                 OutlinedTextField(
                     value = c.label,
                     onValueChange = { v -> vm.updateConfig { it.copy(label = v) } },
-                    label = { Text("App name") },
+                    label = { Text( stringResource(R.string.editorscreen_app_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -188,7 +191,7 @@ fun EditorScreen(vm: MainViewModel) {
                 OutlinedTextField(
                     value = c.clonePackage,
                     onValueChange = { v -> vm.updateConfig { it.copy(clonePackage = v.replace(" ", "")) } },
-                    label = { Text("Package name") },
+                    label = { Text( stringResource(R.string.editorscreen_package_name)) },
                     singleLine = true,
                     isError = state.packageError != null,
                     supportingText = {
@@ -243,7 +246,7 @@ fun EditorScreen(vm: MainViewModel) {
                     Column(Modifier.weight(1f)) {
                         Text("${state.permissions.size - removed.size} of ${state.permissions.size} kept")
                         Text(
-                            "Untick a permission to remove it from the clone. Removing ones the app needs can make it crash.",
+                             stringResource(R.string.editorscreen_untick_a_permission_to_remove_it_fro),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -254,7 +257,7 @@ fun EditorScreen(vm: MainViewModel) {
                     if (state.permissions.any { it in SENSITIVE }) {
                         TextButton(onClick = {
                             vm.updateConfig { cfg -> cfg.copy(removedPermissions = (cfg.removedPermissions + state.permissions.filter { it in SENSITIVE }).distinct()) }
-                        }) { Text("Remove privacy-sensitive permissions") }
+                        }) { Text( stringResource(R.string.editorscreen_remove_privacy_sensitive_permissions)) }
                     }
                     HorizontalDivider()
                     state.permissions.forEach { perm ->
@@ -283,9 +286,9 @@ fun EditorScreen(vm: MainViewModel) {
             Section("Advanced") {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text("Debuggable")
+                        Text( stringResource(R.string.editorscreen_debuggable))
                         Text(
-                            "Lets you inspect the clone with adb / Android Studio.",
+                             stringResource(R.string.editorscreen_lets_you_inspect_the_clone_with_adb),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -299,7 +302,7 @@ fun EditorScreen(vm: MainViewModel) {
                     Icon(Icons.Rounded.Info, null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.width(12.dp))
                     Text(
-                        "Clones are re-signed with TwinnDroid's key. Apps that check their own signature or use Play Integrity " +
+                         stringResource(R.string.editorscreen_clones_are_re_signed_with_twinndroid) +
                             "(most banking apps, some games, Google Sign-In tied to the original) may refuse to log in.",
                         style = MaterialTheme.typography.bodySmall,
                     )

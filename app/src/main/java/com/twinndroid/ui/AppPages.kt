@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.Spring
@@ -60,8 +63,8 @@ fun NewClonePage(vm: MainViewModel) {
     }
     AppListPage(
         vm = vm,
-        title = "New clone",
-        subtitle = "Pick an app to copy. Each clone gets its own login and data.",
+        title = stringResource(R.string.apppages_new_clone),
+        subtitle = stringResource(R.string.apppages_pick_an_app_to_copy_each_clone_gets),
         trailing = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
         header = {
             TwinnCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp)) {
@@ -72,9 +75,9 @@ fun NewClonePage(vm: MainViewModel) {
                     IconBubble(Icons.Rounded.FolderOpen)
                     Spacer(Modifier.width(14.dp))
                     Column(Modifier.weight(1f)) {
-                        Text("From an APK file", style = MaterialTheme.typography.titleMedium)
+                        Text( stringResource(R.string.apppages_from_an_apk_file), style = MaterialTheme.typography.titleMedium)
                         Text(
-                            ".apk, .apks, .xapk or .apkm",
+                             stringResource(R.string.apppages_apk_apks_xapk_or_apkm),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -92,8 +95,8 @@ fun NewClonePage(vm: MainViewModel) {
 fun ExtractPage(vm: MainViewModel) {
     AppListPage(
         vm = vm,
-        title = "Extract APK",
-        subtitle = "Save any installed app, with its splits, as .apk, .apks, .xapk or .apkm.",
+        title = stringResource(R.string.apppages_extract_apk),
+        subtitle = stringResource(R.string.apppages_save_any_installed_app_with_its_spli),
         trailing = Icons.Rounded.FileDownload,
         header = {},
         onPick = { vm.openExport(it.packageName) },
@@ -148,7 +151,7 @@ private fun AppListPage(
                     onValueChange = { query = it },
                     leadingIcon = { Icon(Icons.Rounded.Search, null) },
                     trailingIcon = { if (query.isNotEmpty()) IconButton(onClick = { query = "" }) { Icon(Icons.Rounded.Close, "Clear") } },
-                    placeholder = { Text("Search apps") },
+                    placeholder = { Text( stringResource(R.string.apppages_search_apps)) },
                     singleLine = true,
                     shape = RoundedCornerShape(28.dp),
                     colors = OutlinedTextFieldDefaults.colors(
@@ -158,7 +161,7 @@ private fun AppListPage(
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Row(Modifier.padding(top = 8.dp)) {
-                    FilterChip(selected = showSystem, onClick = { showSystem = !showSystem }, label = { Text("Show system apps") })
+                    FilterChip(selected = showSystem, onClick = { showSystem = !showSystem }, label = { Text( stringResource(R.string.apppages_show_system_apps)) })
                 }
             }
         }

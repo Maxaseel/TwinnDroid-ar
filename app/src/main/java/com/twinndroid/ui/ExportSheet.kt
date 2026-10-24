@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import android.content.Intent
 import android.text.format.Formatter
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -102,7 +105,7 @@ fun ExportSheet(vm: MainViewModel, state: ExportState) {
             }
 
             Spacer(Modifier.height(20.dp))
-            Text("Format", style = MaterialTheme.typography.titleMedium)
+            Text( stringResource(R.string.exportsheet_format), style = MaterialTheme.typography.titleMedium)
             Spacer(Modifier.height(8.dp))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp), maxItemsInEachRow = 3) {
                 ExportFormat.entries.forEach { f ->
@@ -162,7 +165,7 @@ fun ExportSheet(vm: MainViewModel, state: ExportState) {
                         Spacer(Modifier.height(8.dp))
                         LinearProgressIndicator(progress = { shown }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(CircleShape))
                         Spacer(Modifier.height(8.dp))
-                        TextButton(onClick = vm::closeExport) { Text("Cancel") }
+                        TextButton(onClick = vm::closeExport) { Text( stringResource(R.string.exportsheet_cancel)) }
                     }
                     2 -> Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                         Box(
@@ -179,8 +182,8 @@ fun ExportSheet(vm: MainViewModel, state: ExportState) {
                                     .putExtra(Intent.EXTRA_STREAM, state.done)
                                     .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                 context.startActivity(Intent.createChooser(send, "Share ${src.label}"))
-                            }) { Icon(Icons.Rounded.Share, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text("Share") }
-                            Button(onClick = vm::closeExport) { Text("Done") }
+                            }) { Icon(Icons.Rounded.Share, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text( stringResource(R.string.exportsheet_share)) }
+                            Button(onClick = vm::closeExport) { Text( stringResource(R.string.exportsheet_done)) }
                         }
                     }
                     3 -> Column {
@@ -210,7 +213,7 @@ private fun ExportButton(state: ExportState, saveApk: (String) -> Unit, saveBund
     ) { Text("Export as ${state.format.label}") }
     if (state.format == ExportFormat.MERGED) {
         Text(
-            "Merging large apps can take a minute.",
+             stringResource(R.string.exportsheet_merging_large_apps_can_take_a_minute),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
             modifier = Modifier.padding(top = 6.dp),

@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,7 +42,7 @@ fun SpecialAccessSheet(vm: MainViewModel, item: CloneItem, onDismiss: () -> Unit
     val shizuku = ShizukuInstaller.hasPermission()
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(Modifier.padding(horizontal = 24.dp).padding(bottom = 32.dp)) {
-            Text("Special access", style = MaterialTheme.typography.titleLarge)
+            Text( stringResource(R.string.specialaccesssheet_special_access), style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.height(4.dp))
             Text(
                 "${item.config.label} asks for these. Its own \"Open settings\" button opens the page for " +
@@ -69,9 +72,9 @@ fun SpecialAccessSheet(vm: MainViewModel, item: CloneItem, onDismiss: () -> Unit
                 }
                 if (!granted) {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(start = 34.dp, bottom = 4.dp)) {
-                        if (shizuku) Button(onClick = { vm.grantAccess(item, access) }) { Text("Grant") }
+                        if (shizuku) Button(onClick = { vm.grantAccess(item, access) }) { Text( stringResource(R.string.specialaccesssheet_grant)) }
                         OutlinedButton(onClick = { SpecialAccess.openSettings(context, item.config.clonePackage, access) }) {
-                            Text("Open settings")
+                            Text( stringResource(R.string.specialaccesssheet_open_settings))
                         }
                     }
                 }
@@ -79,7 +82,7 @@ fun SpecialAccessSheet(vm: MainViewModel, item: CloneItem, onDismiss: () -> Unit
             if (!shizuku) {
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    "Tip: with Shizuku authorized in Settings, TwinnDroid can grant these in one tap.",
+                     stringResource(R.string.specialaccesssheet_tip_with_shizuku_authorized_in_setti),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

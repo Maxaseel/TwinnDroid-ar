@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -86,7 +89,7 @@ fun IconEditorScreen(vm: MainViewModel) {
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent, scrolledContainerColor = Color.Transparent),
-                title = { Text("Icon") },
+                title = { Text( stringResource(R.string.iconeditorscreen_icon)) },
                 navigationIcon = { IconButton(onClick = { vm.screen = Screen.Editor }) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
             )
         },
@@ -141,7 +144,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                     when (c.iconMode) {
                         IconMode.BADGE -> {
                             Spacer(Modifier.height(12.dp))
-                            Text("Badge colour", style = MaterialTheme.typography.labelLarge)
+                            Text( stringResource(R.string.iconeditorscreen_badge_colour), style = MaterialTheme.typography.labelLarge)
                             Spacer(Modifier.height(8.dp))
                             FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                                 BADGE_COLORS.forEach { color ->
@@ -160,7 +163,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                             OutlinedTextField(
                                 value = c.badgeText,
                                 onValueChange = { v -> vm.updateConfig { it.copy(badgeText = v.take(2)) } },
-                                label = { Text("Badge text (up to 2 characters)") },
+                                label = { Text( stringResource(R.string.iconeditorscreen_badge_text_up_to_2_characters)) },
                                 singleLine = true,
                                 modifier = Modifier.fillMaxWidth(),
                             )
@@ -169,7 +172,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                             Spacer(Modifier.height(12.dp))
                             OutlinedButton(onClick = {
                                 pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                            }) { Icon(Icons.Rounded.Image, null); Spacer(Modifier.width(8.dp)); Text("Choose another image") }
+                            }) { Icon(Icons.Rounded.Image, null); Spacer(Modifier.width(8.dp)); Text( stringResource(R.string.iconeditorscreen_choose_another_image)) }
                         }
                         IconMode.ORIGINAL -> Unit
                     }
@@ -183,7 +186,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                     AdjustSlider("Brightness", "${(a.brightness * 100).toInt()}", a.brightness, -0.6f..0.6f) { set(a.copy(brightness = it)) }
                     AdjustSlider("Contrast", "${(a.contrast * 100).toInt()}", a.contrast, -0.5f..0.5f) { set(a.copy(contrast = it)) }
                     Spacer(Modifier.height(4.dp))
-                    Text("Tint", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(bottom = 6.dp))
+                    Text( stringResource(R.string.iconeditorscreen_tint), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(bottom = 6.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Box(
                             Modifier.size(32.dp).clip(CircleShape)
@@ -209,8 +212,8 @@ fun IconEditorScreen(vm: MainViewModel) {
                         AdjustSlider("Tint strength", "${(a.tintStrength * 100).toInt()}%", a.tintStrength, 0.1f..1f) { set(a.copy(tintStrength = it)) }
                     }
                     Row(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        FilterChip(selected = a.invert, onClick = { set(a.copy(invert = !a.invert)) }, label = { Text("Invert") })
-                        FilterChip(selected = a.flip, onClick = { set(a.copy(flip = !a.flip)) }, label = { Text("Flip") })
+                        FilterChip(selected = a.invert, onClick = { set(a.copy(invert = !a.invert)) }, label = { Text( stringResource(R.string.iconeditorscreen_invert)) })
+                        FilterChip(selected = a.flip, onClick = { set(a.copy(flip = !a.flip)) }, label = { Text( stringResource(R.string.iconeditorscreen_flip)) })
                         FilterChip(
                             selected = a.rotation != 0,
                             onClick = { set(a.copy(rotation = (a.rotation + 90) % 360)) },
@@ -218,7 +221,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                             leadingIcon = { Icon(Icons.AutoMirrored.Rounded.RotateRight, null, Modifier.size(18.dp)) },
                         )
                     }
-                    if (!a.isIdentity) TextButton(onClick = { set(IconAdjust()) }) { Text("Reset adjustments") }
+                    if (!a.isIdentity) TextButton(onClick = { set(IconAdjust()) }) { Text( stringResource(R.string.iconeditorscreen_reset_adjustments)) }
                 }
                 HorizontalDivider(Modifier.padding(horizontal = 40.dp), color = Color.Transparent)
             }
@@ -227,7 +230,7 @@ fun IconEditorScreen(vm: MainViewModel) {
 
     if (customTint) {
         ColorPickerDialog(
-            title = "Tint colour",
+            title = stringResource(R.string.iconeditorscreen_tint_colour),
             initial = c.iconAdjust.tint ?: 0xFF7C4DFF,
             onDismiss = { customTint = false },
             onApply = { v -> vm.updateConfig { it.copy(iconAdjust = it.iconAdjust.copy(tint = v)) }; customTint = false },

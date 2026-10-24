@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import android.os.Build
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
@@ -83,7 +86,7 @@ fun BackgroundScreen(vm: MainViewModel) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
-                "The animation that plays behind TwinnDroid's screens. It pauses whenever TwinnDroid isn't on screen. " +
+                 stringResource(R.string.appearancesubscreens_the_animation_that_plays_behind_twin) +
                     "Inspired by Morphe Patcher.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -91,7 +94,7 @@ fun BackgroundScreen(vm: MainViewModel) {
             androidx.compose.material3.FilledTonalButton(onClick = { vm.peek = true }, modifier = Modifier.fillMaxWidth()) {
                 Icon(androidx.compose.material.icons.Icons.Rounded.Visibility, null)
                 Spacer(Modifier.padding(4.dp))
-                Text("Preview background")
+                Text( stringResource(R.string.appearancesubscreens_preview_background))
             }
             TwinnCard {
                 Column(Modifier.padding(16.dp)) {
@@ -191,7 +194,7 @@ fun HeaderSettingsScreen(vm: MainViewModel) {
                         }
                     }
                 }
-                TextButton(onClick = { set { HeaderSettings() } }) { Text("Reset header") }
+                TextButton(onClick = { set { HeaderSettings() } }) { Text( stringResource(R.string.appearancesubscreens_reset_header)) }
             }
         }
     }

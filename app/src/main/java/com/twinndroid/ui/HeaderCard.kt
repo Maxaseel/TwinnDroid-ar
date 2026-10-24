@@ -1,5 +1,8 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.stringResource
+import com.twinndroid.R
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -88,7 +91,7 @@ fun HomeHeader(
             Spacer(Modifier.width(8.dp))
             HeaderPill(hs, onGradient, Modifier) {
                 Column(Modifier.padding(horizontal = if (hs.pills) 14.dp else 4.dp, vertical = if (hs.pills) 6.dp else 0.dp)) {
-                    Text("TwinnDroid", style = MaterialTheme.typography.headlineMedium, color = contentColor)
+                    Text( stringResource(R.string.headercard_twinndroid), style = MaterialTheme.typography.headlineMedium, color = contentColor)
                     Text(
                         buildString {
                             append(if (count == 1) "1 clone" else "$count clones")

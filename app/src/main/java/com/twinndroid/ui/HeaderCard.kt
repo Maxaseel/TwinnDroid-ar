@@ -1,7 +1,6 @@
 package com.twinndroid.ui
 
 import androidx.compose.ui.res.stringResource
-import com.twinndroid.R
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

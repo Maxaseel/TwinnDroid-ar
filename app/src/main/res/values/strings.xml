@@ -14,7 +14,7 @@
     <string name="appearancescreen_your_own_image">Your own image</string>
     <string name="appearancesubscreens_preview_background">Preview background</string>
     <string name="appearancesubscreens_reset_header">Reset header</string>
-    <string name="appearancesubscreens_the_animation_that_plays_behind_twin">The animation that plays behind TwinnDroid's screens. It pauses whenever TwinnDroid isn't on screen. </string>
+    <string name="appearancesubscreens_the_animation_that_plays_behind_twin">The animation that plays behind TwinnDroid\'s screens. It pauses whenever TwinnDroid isn\'t on screen. </string>
     <string name="apppages_apk_apks_xapk_or_apkm">.apk, .apks, .xapk or .apkm</string>
     <string name="apppages_extract_apk">Extract APK</string>
     <string name="apppages_from_an_apk_file">From an APK file</string>
@@ -32,7 +32,7 @@
     <string name="colorpicker_text">#</string>
     <string name="colorpicker_use_6_hex_digits_e_g_7c4dff">Use 6 hex digits, e.g. 7C4DFF</string>
     <string name="editorscreen_app_name">App name</string>
-    <string name="editorscreen_clones_are_re_signed_with_twinndroid">Clones are re-signed with TwinnDroid's key. Apps that check their own signature or use Play Integrity </string>
+    <string name="editorscreen_clones_are_re_signed_with_twinndroid">Clones are re-signed with TwinnDroid\'s key. Apps that check their own signature or use Play Integrity </string>
     <string name="editorscreen_debuggable">Debuggable</string>
     <string name="editorscreen_lets_you_inspect_the_clone_with_adb">Lets you inspect the clone with adb / Android Studio.</string>
     <string name="editorscreen_package_name">Package name</string>

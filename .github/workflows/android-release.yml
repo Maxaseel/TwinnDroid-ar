@@ -30,7 +30,7 @@ jobs:
       - name: Upload unsigned APK
         uses: actions/upload-artifact@v4
         with:
-          name: twinndroid-v1.1.5-unsigned-apk
+          name: twinndroid-v1.1.6-unsigned-apk
           path: app/build/outputs/apk/release/app-release-unsigned.apk
           if-no-files-found: error
           retention-days: 14

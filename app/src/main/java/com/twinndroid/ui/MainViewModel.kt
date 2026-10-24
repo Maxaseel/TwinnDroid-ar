@@ -1,5 +1,6 @@
 package com.twinndroid.ui
 
+import com.twinndroid.R
 import android.app.Application
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -248,10 +249,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         val e = editor ?: return
         val c = e.config.copy(label = e.config.label.trim(), clonePackage = e.config.clonePackage.trim())
         val err = when {
-            !PACKAGE_REGEX.matches(c.clonePackage) -> "Not a valid package name"
-            c.clonePackage == c.sourcePackage -> "Must differ from the original package"
-            repo.clones.value.any { it.id != c.id && it.clonePackage == c.clonePackage } -> "Another clone already uses this package"
-            c.label.isEmpty() -> "Name cannot be empty"
+            !PACKAGE_REGEX.matches(c.clonePackage) -> ctx.getString(R.string.editor_invalid_package)
+            c.clonePackage == c.sourcePackage -> ctx.getString(R.string.editor_package_must_differ)
+            repo.clones.value.any { it.id != c.id && it.clonePackage == c.clonePackage } -> ctx.getString(R.string.editor_package_in_use)
+            c.label.isEmpty() -> ctx.getString(R.string.editor_name_empty)
             else -> null
         }
         if (err != null) {

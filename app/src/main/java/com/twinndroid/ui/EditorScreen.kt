@@ -108,8 +108,8 @@ fun EditorScreen(vm: MainViewModel) {
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent, scrolledContainerColor = Color.Transparent),
-                title = { Text(if (state.isNew) "New clone" else "Customize clone") },
-                navigationIcon = { IconButton(onClick = vm::closeEditor) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
+                title = { Text(if (state.isNew) stringResource(R.string.editor_new_clone) else stringResource(R.string.editor_customize_clone)) },
+                navigationIcon = { IconButton(onClick = vm::closeEditor) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.editor_back)) } },
             )
         },
         bottomBar = {
@@ -120,7 +120,7 @@ fun EditorScreen(vm: MainViewModel) {
                 ) {
                     Icon(Icons.Rounded.Check, null)
                     Spacer(Modifier.width(8.dp))
-                    Text(if (state.isNew) "Clone & install" else "Save, rebuild & install")
+                    Text(if (state.isNew) stringResource(R.string.editor_clone_install) else stringResource(R.string.editor_save_rebuild_install))
                 }
             }
         },
@@ -139,13 +139,13 @@ fun EditorScreen(vm: MainViewModel) {
                 }
                 Spacer(Modifier.width(16.dp))
                 Column {
-                    Text(c.label.ifBlank { "Unnamed" }, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(c.label.ifBlank { stringResource(R.string.editor_unnamed) }, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(
-                        "Clone of ${c.sourceLabel}${state.sourceVersion?.let { " $it" } ?: ""}",
+                        stringResource(R.string.editor_clone_of, c.sourceLabel + (state.sourceVersion?.let { " $it" } ?: "")),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                     Text(
-                        if (c.sourceKind == SourceKind.INSTALLED) "From installed app · auto-update capable" else "From APK file",
+                        if (c.sourceKind == SourceKind.INSTALLED) stringResource(R.string.editor_from_installed) else stringResource(R.string.editor_from_apk),
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.secondary,
                     )
@@ -164,7 +164,7 @@ fun EditorScreen(vm: MainViewModel) {
                         Spacer(Modifier.width(12.dp))
                         Column {
                             Text(
-                                if (shield) "Likely won't run as a clone" else "Sign-in may not work",
+                                if (shield) stringResource(R.string.editor_likely_wont_run) else stringResource(R.string.editor_signin_may_fail),
                                 style = MaterialTheme.typography.titleSmall,
                                 color = if (shield) MaterialTheme.colorScheme.onErrorContainer else MaterialTheme.colorScheme.onSurface,
                             )
@@ -179,7 +179,7 @@ fun EditorScreen(vm: MainViewModel) {
                 }
             }
 
-            Section("Identity") {
+            Section(stringResource(R.string.editor_identity)) {
                 OutlinedTextField(
                     value = c.label,
                     onValueChange = { v -> vm.updateConfig { it.copy(label = v) } },
@@ -197,15 +197,15 @@ fun EditorScreen(vm: MainViewModel) {
                     supportingText = {
                         Text(
                             state.packageError
-                                ?: if (!state.isNew && c.builtVersionCode > 0) "Changing this creates a new app (fresh data) instead of updating the existing clone."
-                                else "Each clone needs a unique package. This is what keeps its login separate.",
+                                ?: if (!state.isNew && c.builtVersionCode > 0) stringResource(R.string.editor_package_changes_app)
+                                else stringResource(R.string.editor_unique_package),
                         )
                     },
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
 
-            Section("Icon") {
+            Section(stringResource(R.string.editor_icon)) {
                 Row(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).clickable { vm.screen = Screen.IconEditor }.padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -218,16 +218,16 @@ fun EditorScreen(vm: MainViewModel) {
                     Column(Modifier.weight(1f)) {
                         Text(
                             when (c.iconMode) {
-                                IconMode.ORIGINAL -> "Original icon"
-                                IconMode.BADGE -> "Badge"
-                                IconMode.CUSTOM -> "Custom image"
+                                IconMode.ORIGINAL -> stringResource(R.string.editor_original_icon)
+                                IconMode.BADGE -> stringResource(R.string.editor_badge)
+                                IconMode.CUSTOM -> stringResource(R.string.editor_custom_image)
                             },
                         )
                         Text(
                             buildString {
-                                if (c.iconMode == IconMode.BADGE) append("“${c.badgeText}” badge")
-                                if (!c.iconAdjust.isIdentity) { if (isNotEmpty()) append(" · "); append("adjusted") }
-                                if (isEmpty()) append("Name, badge, colour, tint")
+                                if (c.iconMode == IconMode.BADGE) append(stringResource(R.string.editor_badge_text, c.badgeText))
+                                if (!c.iconAdjust.isIdentity) { if (isNotEmpty()) append(" · "); append(stringResource(R.string.editor_adjusted)) }
+                                if (isEmpty()) append(stringResource(R.string.editor_icon_default_desc))
                             },
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -237,14 +237,14 @@ fun EditorScreen(vm: MainViewModel) {
                 }
             }
 
-            Section("Permissions") {
+            Section(stringResource(R.string.editor_permissions)) {
                 val removed = c.removedPermissions.toSet()
                 Row(
                     Modifier.fillMaxWidth().clickable { permsExpanded = !permsExpanded }.padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text("${state.permissions.size - removed.size} of ${state.permissions.size} kept")
+                        Text(stringResource(R.string.editor_permissions_kept, state.permissions.size - removed.size, state.permissions.size))
                         Text(
                              stringResource(R.string.editorscreen_untick_a_permission_to_remove_it_fro),
                             style = MaterialTheme.typography.bodySmall,
@@ -283,7 +283,7 @@ fun EditorScreen(vm: MainViewModel) {
                 }
             }
 
-            Section("Advanced") {
+            Section(stringResource(R.string.editor_advanced)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text( stringResource(R.string.editorscreen_debuggable))
@@ -302,8 +302,7 @@ fun EditorScreen(vm: MainViewModel) {
                     Icon(Icons.Rounded.Info, null, tint = MaterialTheme.colorScheme.primary)
                     Spacer(Modifier.width(12.dp))
                     Text(
-                         stringResource(R.string.editorscreen_clones_are_re_signed_with_twinndroid) +
-                            "(most banking apps, some games, Google Sign-In tied to the original) may refuse to log in.",
+                        stringResource(R.string.editor_signature_warning),
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }

@@ -84,7 +84,7 @@ import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-private val STEPS = listOf("Reading the app", "Patching package & resources", "Signing", "Installing")
+private val STEPS = listOf(R.string.build_step_reading, R.string.build_step_patching, R.string.build_step_signing, R.string.build_step_installing)
 
 /** Full-screen, animated progress for building and installing a clone. */
 @Composable
@@ -119,9 +119,9 @@ fun BuildOverlay(vm: MainViewModel, state: BuildState) {
             Spacer(Modifier.height(8.dp))
             AnimatedContent(
                 when {
-                    success -> "${state.label} is ready"
-                    failed -> "Clone failed"
-                    else -> "Cloning ${state.label}"
+                    success -> stringResource(R.string.build_ready, state.label)
+                    failed -> stringResource(R.string.build_failed)
+                    else -> stringResource(R.string.build_cloning, state.label)
                 },
                 transitionSpec = { (fadeIn() + scaleIn(initialScale = 0.9f)) togetherWith fadeOut() },
                 label = "buildTitle",
@@ -132,7 +132,8 @@ fun BuildOverlay(vm: MainViewModel, state: BuildState) {
 
             TwinnCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(horizontal = 18.dp, vertical = 14.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    STEPS.forEachIndexed { i, label ->
+                    STEPS.forEachIndexed { i, labelRes ->
+                        val label = stringResource(labelRes)
                         val status = when {
                             state.stage > i || success -> StepStatus.DONE
                             failed && state.stage == i -> StepStatus.FAILED
@@ -155,7 +156,7 @@ fun BuildOverlay(vm: MainViewModel, state: BuildState) {
             }
 
             Spacer(Modifier.height(8.dp))
-            TextButton(onClick = { showLog = !showLog }) { Text(if (showLog) "Hide details" else "Show details") }
+            TextButton(onClick = { showLog = !showLog }) { Text(stringResource(if (showLog) R.string.build_hide_details else R.string.build_show_details)) }
             AnimatedVisibility(showLog, enter = expandVertically() + fadeIn(), exit = shrinkVertically() + fadeOut()) {
                 val scroll = rememberScrollState()
                 LaunchedEffect(state.logs.size) { scroll.animateScrollTo(scroll.maxValue) }
@@ -177,7 +178,7 @@ fun BuildOverlay(vm: MainViewModel, state: BuildState) {
             Spacer(Modifier.height(16.dp))
             AnimatedVisibility(!state.running, enter = fadeIn() + expandVertically()) {
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedButton(onClick = vm::dismissBuild) { Text(if (success) "Done" else "Close") }
+                    OutlinedButton(onClick = vm::dismissBuild) { Text(stringResource(if (success) R.string.build_done else R.string.build_close)) }
                     val launch = if (success) vm.launchIntent(state.clonePackage) else null
                     if (launch != null) {
                         Button(onClick = { vm.dismissBuild(); context.startActivity(launch) }) { Text( stringResource(R.string.buildoverlay_open_clone)) }

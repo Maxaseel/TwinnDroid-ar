@@ -67,7 +67,7 @@ class UpdateWorker(context: Context, params: WorkerParameters) : CoroutineWorker
             )
             val n = NotificationCompat.Builder(context, CHANNEL)
                 .setSmallIcon(R.drawable.ic_launcher_monochrome)
-                .setContentTitle(if (labels.size == 1) "Clone update available" else "${labels.size} clone updates available")
+                .setContentTitle(context.resources.getQuantityString(R.plurals.notification_clone_update, labels.size, labels.size))
                 .setContentText(labels.joinToString())
                 .setContentIntent(open)
                 .setAutoCancel(true)

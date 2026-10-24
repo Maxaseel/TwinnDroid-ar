@@ -80,19 +80,19 @@ fun SettingsScreen(vm: MainViewModel) {
     val exportKey = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/x-pkcs12")) { uri ->
         if (uri != null) runCatching {
             context.contentResolver.openOutputStream(uri)!!.use { SigningKeys.export(context, it) }
-        }.onFailure { vm.message = "Export failed: ${it.message}" }
+        }.onFailure { vm.message = context.getString(R.string.settings_export_failed, it.message.orEmpty()) }
     }
     val importKey = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) runCatching {
             context.contentResolver.openInputStream(uri)!!.use { SigningKeys.import(context, it) }
             fingerprint = SigningKeys.fingerprint(context)
-        }.onFailure { vm.message = "Not a valid TwinnDroid key: ${it.message}" }
+        }.onFailure { vm.message = context.getString(R.string.settings_invalid_key, it.message.orEmpty()) }
     }
 
     val exportBackup = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/zip")) { uri ->
         if (uri != null) runCatching {
             context.contentResolver.openOutputStream(uri)!!.use { BackupManager.export(context, it) }
-        }.onSuccess { vm.message = "Backup saved." }.onFailure { vm.message = "Backup failed: ${it.message}" }
+        }.onSuccess { vm.message = context.getString(R.string.settings_backup_saved) }.onFailure { vm.message = context.getString(R.string.settings_backup_failed, it.message.orEmpty()) }
     }
     val importBackup = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) runCatching {
@@ -100,7 +100,7 @@ fun SettingsScreen(vm: MainViewModel) {
             fingerprint = SigningKeys.fingerprint(context)
             useShizuku = vm.settings.useShizuku
             autoUpdate = vm.settings.autoUpdate
-        }.onSuccess { vm.message = "Backup restored. Your clones are back." }.onFailure { vm.message = "Restore failed: ${it.message}" }
+        }.onSuccess { vm.message = context.getString(R.string.settings_backup_restored) }.onFailure { vm.message = context.getString(R.string.settings_restore_failed, it.message.orEmpty()) }
     }
 
     Scaffold(
@@ -109,7 +109,7 @@ fun SettingsScreen(vm: MainViewModel) {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent, scrolledContainerColor = Color.Transparent),
                 title = { Text( stringResource(R.string.settingsscreen_settings)) },
-                navigationIcon = { IconButton(onClick = { vm.screen = Screen.Home }) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Back") } },
+                navigationIcon = { IconButton(onClick = { vm.screen = Screen.Home }) { Icon(Icons.AutoMirrored.Rounded.ArrowBack, stringResource(R.string.settings_back)) } },
             )
         },
     ) { padding ->
@@ -120,18 +120,18 @@ fun SettingsScreen(vm: MainViewModel) {
             val running = remember(tick) { ShizukuInstaller.isRunning() }
             val granted = remember(tick) { ShizukuInstaller.hasPermission() }
 
-            SettingsCard("Appearance") {
+            SettingsCard(stringResource(R.string.settings_appearance_title)) {
                 Text( stringResource(R.string.settingsscreen_themes_custom_colours_text_size_and), style = MaterialTheme.typography.bodyMedium)
                 Spacer(Modifier.height(8.dp))
                 OutlinedButton(onClick = { vm.screen = Screen.Appearance }) { Text( stringResource(R.string.settingsscreen_open_appearance_settings)) }
             }
 
-            SettingsCard("Shizuku (optional)") {
+            SettingsCard(stringResource(R.string.settings_shizuku_title)) {
                 Text(
                     when {
-                        granted -> "✓ Ready — clones install without a confirmation dialog."
-                        running -> "Shizuku is running but TwinnDroid isn't authorized yet."
-                        else -> "Not running. Install Shizuku and start it with Wireless debugging (no root needed) for prompt-free installs and background auto-updates."
+                        granted -> stringResource(R.string.settings_shizuku_ready)
+                        running -> stringResource(R.string.settings_shizuku_running)
+                        else -> stringResource(R.string.settings_shizuku_not_running)
                     },
                     style = MaterialTheme.typography.bodyMedium,
                 )
@@ -142,23 +142,23 @@ fun SettingsScreen(vm: MainViewModel) {
                         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://shizuku.rikka.app/download/")))
                     }) { Text( stringResource(R.string.settingsscreen_get_shizuku)) }
                 }
-                ToggleRow("Use Shizuku for installs", "Falls back to Android's installer when unavailable.", useShizuku) {
+                ToggleRow(stringResource(R.string.settings_use_shizuku), stringResource(R.string.settings_shizuku_fallback), useShizuku) {
                     useShizuku = it; vm.settings.useShizuku = it
                 }
             }
 
-            SettingsCard("Updates") {
+            SettingsCard(stringResource(R.string.settings_updates_title)) {
                 Text(
-                     stringResource(R.string.settingsscreen_twinndroid_checks_every_few_hours_wh) +
-                        "Rebuilding keeps the clone's data and login because it's signed with the same key.",
+                    stringResource(R.string.settingsscreen_twinndroid_checks_every_few_hours_wh) + "\n\n" +
+                        stringResource(R.string.settings_rebuild_same_key),
                     style = MaterialTheme.typography.bodyMedium,
                 )
-                ToggleRow("Auto-update in background", "Rebuilds and installs silently. Requires Shizuku.", autoUpdate, enabled = granted || autoUpdate) {
+                ToggleRow(stringResource(R.string.settings_auto_update_title), stringResource(R.string.settings_auto_update_desc), autoUpdate, enabled = granted || autoUpdate) {
                     autoUpdate = it; vm.settings.autoUpdate = it
                 }
             }
 
-            SettingsCard("Signing key") {
+            SettingsCard(stringResource(R.string.settings_signing_key_title)) {
                 Text(
                      stringResource(R.string.settingsscreen_all_clones_are_signed_with_this_key),
                     style = MaterialTheme.typography.bodyMedium,
@@ -173,10 +173,9 @@ fun SettingsScreen(vm: MainViewModel) {
                 }
             }
 
-            SettingsCard("Backup & restore") {
+            SettingsCard(stringResource(R.string.settings_backup_restore_title)) {
                 Text(
-                     stringResource(R.string.settingsscreen_saves_your_clone_list_signing_key_im) +
-                        "reinstalling TwinnDroid or on a new phone and your clones keep updating.",
+                    stringResource(R.string.settings_backup_desc),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(Modifier.height(12.dp))
@@ -186,13 +185,11 @@ fun SettingsScreen(vm: MainViewModel) {
                 }
             }
 
-            SettingsCard("About") {
-                Text("TwinnDroid ${BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.titleMedium)
+            SettingsCard(stringResource(R.string.settings_about_title)) {
+                Text(stringResource(R.string.settings_app_version, BuildConfig.VERSION_NAME), style = MaterialTheme.typography.titleMedium)
                 Spacer(Modifier.height(4.dp))
                 Text(
-                     stringResource(R.string.settingsscreen_clones_are_real_separately_installed) +
-                        "custom permissions inside the APK, applies your name/icon/permission tweaks, then re-signs it. " +
-                        "Nothing runs inside TwinnDroid and no root is needed.",
+                    stringResource(R.string.settings_about_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <plurals name="header_clone_count">
+        <item quantity="zero">لا توجد نسخ</item>
+        <item quantity="one">نسخة واحدة</item>
+        <item quantity="two">نسختان</item>
+        <item quantity="few">%d نسخ</item>
+        <item quantity="many">%d نسخة</item>
+        <item quantity="other">%d نسخة</item>
+    </plurals>
+    <plurals name="header_update_count">
+        <item quantity="zero">لا توجد تحديثات</item>
+        <item quantity="one">تحديث واحد</item>
+        <item quantity="two">تحديثان</item>
+        <item quantity="few">%d تحديثات</item>
+        <item quantity="many">%d تحديثًا</item>
+        <item quantity="other">%d تحديث</item>
+    </plurals>
+    <plurals name="notification_clone_update">
+        <item quantity="zero">لا توجد تحديثات للنسخ</item>
+        <item quantity="one">يتوفر تحديث لنسخة واحدة</item>
+        <item quantity="two">يتوفر تحديث لنسختين</item>
+        <item quantity="few">يتوفر تحديث لـ %d نسخ</item>
+        <item quantity="many">يتوفر تحديث لـ %d نسخة</item>
+        <item quantity="other">يتوفر تحديث لـ %d نسخة</item>
+    </plurals>
+</resources>

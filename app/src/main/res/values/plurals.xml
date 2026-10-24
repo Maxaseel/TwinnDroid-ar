@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <plurals name="header_clone_count">
+        <item quantity="one">%d clone</item>
+        <item quantity="other">%d clones</item>
+    </plurals>
+    <plurals name="header_update_count">
+        <item quantity="one">%d update</item>
+        <item quantity="other">%d updates</item>
+    </plurals>
+    <plurals name="notification_clone_update">
+        <item quantity="one">%d clone update available</item>
+        <item quantity="other">%d clone updates available</item>
+    </plurals>
+</resources>

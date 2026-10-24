@@ -1,5 +1,6 @@
 package com.twinndroid.ui
 
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 
 import androidx.compose.foundation.BorderStroke
@@ -93,8 +94,8 @@ fun HomeHeader(
                     Text( stringResource(R.string.headercard_twinndroid), style = MaterialTheme.typography.headlineMedium, color = contentColor)
                     Text(
                         buildString {
-                            append(if (count == 1) "1 clone" else "$count clones")
-                            if (updates > 0) append(" · $updates update${if (updates > 1) "s" else ""}")
+                            append(pluralStringResource(R.plurals.header_clone_count, count, count))
+                            if (updates > 0) append(" · ").append(pluralStringResource(R.plurals.header_update_count, updates, updates))
                         },
                         color = contentColor.copy(alpha = 0.8f),
                     )
@@ -102,11 +103,11 @@ fun HomeHeader(
             }
             Spacer(Modifier.weight(1f))
             HeaderPill(hs, onGradient, Modifier) {
-                IconButton(onClick = onAppearance) { Icon(Icons.Rounded.Palette, "Appearance", tint = contentColor) }
+                IconButton(onClick = onAppearance) { Icon(Icons.Rounded.Palette, stringResource(R.string.header_appearance), tint = contentColor) }
             }
             Spacer(Modifier.width(6.dp))
             HeaderPill(hs, onGradient, Modifier) {
-                IconButton(onClick = onSettings) { Icon(Icons.Rounded.Settings, "Settings", tint = contentColor) }
+                IconButton(onClick = onSettings) { Icon(Icons.Rounded.Settings, stringResource(R.string.header_settings), tint = contentColor) }
             }
         }
     }

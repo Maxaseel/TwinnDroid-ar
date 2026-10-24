@@ -92,9 +92,9 @@ fun ClonesPage(vm: MainViewModel, onNewClone: () -> Unit) {
 
         if (!canInstall) item(key = "warn") {
             WarningCard(
-                "TwinnDroid needs permission to install apps",
-                "Allow it once, or set up Shizuku in Settings for prompt-free installs.",
-                "Allow",
+                stringResource(R.string.home_install_permission_title),
+                stringResource(R.string.home_install_permission_body),
+                stringResource(R.string.home_allow),
                 Modifier.animateItem(),
             ) {
                 context.startActivity(
@@ -131,11 +131,10 @@ fun ClonesPage(vm: MainViewModel, onNewClone: () -> Unit) {
     confirmDelete?.let { item ->
         AlertDialog(
             onDismissRequest = { confirmDelete = null },
-            title = { Text("Remove ${item.config.label}?") },
+            title = { Text(stringResource(R.string.home_remove_clone_title, item.config.label)) },
             text = {
                 Text(
-                    if (item.installedVersion != null) "This removes it from TwinnDroid only. The installed clone stays on your device; uninstall it separately if you want it gone."
-                    else "This removes the clone settings from TwinnDroid.",
+                    stringResource(if (item.installedVersion != null) R.string.home_remove_installed_desc else R.string.home_remove_saved_desc),
                 )
             },
             confirmButton = { TextButton(onClick = { vm.delete(item.config); confirmDelete = null }) { Text( stringResource(R.string.homescreen_remove)) } },

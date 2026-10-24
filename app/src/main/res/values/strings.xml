@@ -163,4 +163,18 @@
     <string name="editor_package_must_differ">Must differ from the original package</string>
     <string name="editor_package_in_use">Another clone already uses this package</string>
     <string name="editor_name_empty">Name cannot be empty</string>
+    <string name="iconeditor_colour_adjustments">Colour &amp; adjustments</string>
+    <string name="iconeditor_hue">Hue</string>
+    <string name="iconeditor_saturation">Saturation</string>
+    <string name="iconeditor_brightness">Brightness</string>
+    <string name="iconeditor_contrast">Contrast</string>
+    <string name="iconeditor_rotate">Rotate</string>
+    <string name="iconeditor_rotate_degrees">Rotate %1$d°</string>
+    <string name="iconeditor_custom">Custom</string>
+    <string name="iconeditor_style">Style</string>
+    <string name="iconeditor_original">Original</string>
+    <string name="iconeditor_badge_mode">Badge · %1$s</string>
+    <string name="iconeditor_tint_strength">Tint strength</string>
+    <string name="iconeditor_no_tint">No tint</string>
+    <string name="iconeditor_custom_colour">Custom colour</string>
 </resources>

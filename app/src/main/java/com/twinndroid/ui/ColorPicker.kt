@@ -118,15 +118,15 @@ fun ColorPickerDialog(title: String, initial: Long, onDismiss: () -> Unit, onApp
                     modifier = Modifier.fillMaxWidth(),
                 )
                 GradientSlider(
-                    "Hue", "${hue.toInt()}°", hue, 0f..360f,
+                    stringResource(R.string.iconeditor_hue), "${hue.toInt()}°", hue, 0f..360f,
                     Brush.horizontalGradient((0..6).map { Color.hsv(it * 60f % 360f, 1f, 1f) }),
                 ) { hue = it; syncHex() }
                 GradientSlider(
-                    "Saturation", "${(sat * 100).toInt()}%", sat, 0f..1f,
+                    stringResource(R.string.iconeditor_saturation), "${(sat * 100).toInt()}%", sat, 0f..1f,
                     Brush.horizontalGradient(listOf(Color.hsv(hue, 0f, value), Color.hsv(hue, 1f, value))),
                 ) { sat = it; syncHex() }
                 GradientSlider(
-                    "Brightness", "${(value * 100).toInt()}%", value, 0f..1f,
+                    stringResource(R.string.iconeditor_brightness), "${(value * 100).toInt()}%", value, 0f..1f,
                     Brush.horizontalGradient(listOf(Color.Black, Color.hsv(hue, sat, 1f))),
                 ) { value = it; syncHex() }
                 Spacer(Modifier.height(8.dp))

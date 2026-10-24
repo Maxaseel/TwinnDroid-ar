@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TwinnDroid</string>
     <string name="appearancescreen_a">أ</string>
@@ -163,4 +163,18 @@
     <string name="editor_package_must_differ">يجب أن يختلف عن اسم حزمة التطبيق الأصلي</string>
     <string name="editor_package_in_use">تستخدم نسخة أخرى اسم الحزمة هذا بالفعل</string>
     <string name="editor_name_empty">يجب إدخال اسم</string>
+    <string name="iconeditor_colour_adjustments">اللون والتعديلات</string>
+    <string name="iconeditor_hue">درجة اللون</string>
+    <string name="iconeditor_saturation">التشبّع</string>
+    <string name="iconeditor_brightness">السطوع</string>
+    <string name="iconeditor_contrast">التباين</string>
+    <string name="iconeditor_rotate">تدوير</string>
+    <string name="iconeditor_rotate_degrees">تدوير %1$d°</string>
+    <string name="iconeditor_custom">مخصص</string>
+    <string name="iconeditor_style">النمط</string>
+    <string name="iconeditor_original">الأصلي</string>
+    <string name="iconeditor_badge_mode">شارة · %1$s</string>
+    <string name="iconeditor_tint_strength">قوة التلوين</string>
+    <string name="iconeditor_no_tint">بلا تلوين</string>
+    <string name="iconeditor_custom_colour">لون مخصص</string>
 </resources>

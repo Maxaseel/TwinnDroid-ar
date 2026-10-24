@@ -107,13 +107,13 @@ fun IconEditorScreen(vm: MainViewModel) {
                     ) { state.preview?.let { Image(it, null, Modifier.size(80.dp)) } }
                     Spacer(Modifier.width(18.dp))
                     Column {
-                        Text(c.label.ifBlank { "Unnamed" }, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(c.label.ifBlank { stringResource(R.string.editor_unnamed) }, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(
                             when (c.iconMode) {
-                                IconMode.ORIGINAL -> "Original icon"
-                                IconMode.BADGE -> "Badge · ${c.badgeText.ifBlank { "—" }}"
-                                IconMode.CUSTOM -> "Custom image"
-                            } + if (!c.iconAdjust.isIdentity) " · adjusted" else "",
+                                IconMode.ORIGINAL -> stringResource(R.string.editor_original_icon)
+                                IconMode.BADGE -> stringResource(R.string.iconeditor_badge_mode, c.badgeText.ifBlank { "—" })
+                                IconMode.CUSTOM -> stringResource(R.string.editor_custom_image)
+                            } + if (!c.iconAdjust.isIdentity) " · ${stringResource(R.string.editor_adjusted)}" else "",
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -124,8 +124,8 @@ fun IconEditorScreen(vm: MainViewModel) {
                 Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                IconPanel("Style") {
-                    val modes = listOf(IconMode.ORIGINAL to "Original", IconMode.BADGE to "Badge", IconMode.CUSTOM to "Custom")
+                IconPanel(stringResource(R.string.iconeditor_style)) {
+                    val modes = listOf(IconMode.ORIGINAL to stringResource(R.string.iconeditor_original), IconMode.BADGE to stringResource(R.string.editor_badge), IconMode.CUSTOM to stringResource(R.string.iconeditor_custom))
                     SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
                         modes.forEachIndexed { i, (mode, label) ->
                             SegmentedButton(
@@ -178,13 +178,13 @@ fun IconEditorScreen(vm: MainViewModel) {
                     }
                 }
 
-                IconPanel("Colour & adjustments") {
+                IconPanel(stringResource(R.string.iconeditor_colour_adjustments)) {
                     val a = c.iconAdjust
                     fun set(x: IconAdjust) = vm.updateConfig { it.copy(iconAdjust = x) }
-                    AdjustSlider("Hue", "${a.hue.toInt()}°", a.hue, -180f..180f) { set(a.copy(hue = it)) }
-                    AdjustSlider("Saturation", "${(a.saturation * 100).toInt()}%", a.saturation, 0f..2f) { set(a.copy(saturation = it)) }
-                    AdjustSlider("Brightness", "${(a.brightness * 100).toInt()}", a.brightness, -0.6f..0.6f) { set(a.copy(brightness = it)) }
-                    AdjustSlider("Contrast", "${(a.contrast * 100).toInt()}", a.contrast, -0.5f..0.5f) { set(a.copy(contrast = it)) }
+                    AdjustSlider(stringResource(R.string.iconeditor_hue), "${a.hue.toInt()}°", a.hue, -180f..180f) { set(a.copy(hue = it)) }
+                    AdjustSlider(stringResource(R.string.iconeditor_saturation), "${(a.saturation * 100).toInt()}%", a.saturation, 0f..2f) { set(a.copy(saturation = it)) }
+                    AdjustSlider(stringResource(R.string.iconeditor_brightness), "${(a.brightness * 100).toInt()}", a.brightness, -0.6f..0.6f) { set(a.copy(brightness = it)) }
+                    AdjustSlider(stringResource(R.string.iconeditor_contrast), "${(a.contrast * 100).toInt()}", a.contrast, -0.5f..0.5f) { set(a.copy(contrast = it)) }
                     Spacer(Modifier.height(4.dp))
                     Text( stringResource(R.string.iconeditorscreen_tint), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(bottom = 6.dp))
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -193,7 +193,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                                 .border(if (a.tint == null) 3.dp else 1.dp, if (a.tint == null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant, CircleShape)
                                 .clickable { set(a.copy(tint = null)) },
                             contentAlignment = Alignment.Center,
-                        ) { Icon(Icons.Rounded.Block, "No tint", Modifier.size(18.dp)) }
+                        ) { Icon(Icons.Rounded.Block, stringResource(R.string.iconeditor_no_tint), Modifier.size(18.dp)) }
                         TINTS.forEach { tnt ->
                             Box(
                                 Modifier.size(32.dp).clip(CircleShape).background(Color(tnt))
@@ -206,10 +206,10 @@ fun IconEditorScreen(vm: MainViewModel) {
                                 .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape)
                                 .clickable { customTint = true },
                             contentAlignment = Alignment.Center,
-                        ) { Icon(Icons.Rounded.Colorize, "Custom colour", Modifier.size(18.dp)) }
+                        ) { Icon(Icons.Rounded.Colorize, stringResource(R.string.iconeditor_custom_colour), Modifier.size(18.dp)) }
                     }
                     AnimatedVisibility(a.tint != null) {
-                        AdjustSlider("Tint strength", "${(a.tintStrength * 100).toInt()}%", a.tintStrength, 0.1f..1f) { set(a.copy(tintStrength = it)) }
+                        AdjustSlider(stringResource(R.string.iconeditor_tint_strength), "${(a.tintStrength * 100).toInt()}%", a.tintStrength, 0.1f..1f) { set(a.copy(tintStrength = it)) }
                     }
                     Row(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         FilterChip(selected = a.invert, onClick = { set(a.copy(invert = !a.invert)) }, label = { Text( stringResource(R.string.iconeditorscreen_invert)) })
@@ -217,7 +217,7 @@ fun IconEditorScreen(vm: MainViewModel) {
                         FilterChip(
                             selected = a.rotation != 0,
                             onClick = { set(a.copy(rotation = (a.rotation + 90) % 360)) },
-                            label = { Text(if (a.rotation == 0) "Rotate" else "Rotate ${a.rotation}°") },
+                            label = { Text(if (a.rotation == 0) stringResource(R.string.iconeditor_rotate) else stringResource(R.string.iconeditor_rotate_degrees, a.rotation)) },
                             leadingIcon = { Icon(Icons.AutoMirrored.Rounded.RotateRight, null, Modifier.size(18.dp)) },
                         )
                     }
